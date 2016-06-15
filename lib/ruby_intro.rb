@@ -3,58 +3,74 @@
 # Part 1
 
 def sum arr
-  if arr.empty?
-    return 0 
-  else
-    sum = 0
-    arr.each { |e| sum += e }
-    return sum
-  end
+   if arr.length == 0 
+     0
+   else
+     sum = 0
+     arr.each {|e| sum += e }
+     sum
+   end
 end
 
 def max_2_sum arr
-  if arr.empty?
-    return 0
+  if arr.length == 0
+    0
   elsif arr.length == 1
-    return arr[0]
+    arr[0]
   else
-    arr.sort! do |e,f|
-      f<=>e
-    end
-    return sum [arr[0], arr[1]]
+    arr.sort! { |a, b| b <=> a}
+    sum arr.values_at(0, 1)
   end
 end
 
 def sum_to_n? arr, n
-  # if arr is empty, false by definition
-  if arr.empty?
-    return false
+  if arr.length == 0
+    false
   else
-    # if arr has more than 1 element, it is possible to find pairing
-    arr.combination(2).to_a.each { |array| 
-      return true if array[0] + array[1] == n
-    }
-    # otherwise, there's no way to find a pair that sums to n
-    return false
+    arr.combination(2).to_a.each do |a, b| 
+      return true if a + b == n 
+    end
+    false
   end
 end
 
 # Part 2
 
 def hello(name)
-
+  "Hello, " + name
 end
 
 def starts_with_consonant? s
-
+  if s =~ /^([^aeiou\W]).*/i
+    true
+  else
+    false
+  end
 end
 
 def binary_multiple_of_4? s
-
+  if s =~ /^[01]*00$|^0$/
+    true
+  else
+    false
+  end
 end
 
 # Part 3
 
 class BookInStock
+  attr_accessor :isbn
+  attr_accessor :price
 
+  def initialize(isbn, price)
+    if isbn == '' || price <= 0
+      raise ArgumentError
+    end
+    @isbn = isbn
+    @price = price
+  end
+  
+  def price_as_string
+    '$%.2f' % @price
+  end
 end
